@@ -1,0 +1,83 @@
+<html>
+<body>
+<form action="{% url 'register' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+<table align="center" border="1">
+   <tr>
+       <td>
+           <table border="1">
+               <tr>
+                    <th colspan="4" style="background-color: darkorange;color: white;">Employee Registration</th>
+               </tr>
+            <tr>
+                <td colspan="3">ACOUNT NUMBER</td>
+                <td><input type="number" name="acno" value="{{ data }}" readonly></td>
+            </tr>
+            <tr>
+                <td colspan="3">NAME</td>
+                <td><input type="text" name="name" placeholder="NAME" required></td>
+            </tr>
+            <tr>
+                <td colspan="3">ACOUNT TYPE</td>
+                <td><select  name="type">
+                    <option  value="saving">SAVING</option>
+                    <option  value="current">CURRENT</option>
+                </select>
+                </td>
+            </tr>
+             <tr>
+                <td colspan="3">AGE</td>
+                <td><input type="number" name="age" placeholder="age" required></td>
+            </tr>
+            <tr>
+                <td colspan="3">GENDER</td>
+                <td>
+                    <input type="radio" name="gender" value="male">MALE
+                    <input type="radio" name="gender" value="female">FEMALE
+                </td>
+
+            </tr>
+            <tr>
+                <td colspan="3">BALANCE</td>
+                <td><input type="number" name="balance" placeholder="balance" required></td>
+            </tr>
+            <tr>
+                <td colspan="3">PHOTO</td>
+                <td><input type="file" name="image"  required></td>
+            </tr>
+            <tr>
+                <th colspan="4"><button type="submit">INSERT</button> </th>
+            </tr>
+
+           </table>
+       </td>
+
+       <td>
+           <table border="1">
+               <tr style="background-color: blue;color: white;">
+                   <th>Account Number</th>
+                   <th>Account Holder</th>
+                   <th>Images</th>
+               </tr>
+            {% for x in data1  %}
+            <tr>
+                <td>
+                 <a href="/display{{ x.acno }}/">{{ x.acno }}</a>
+                </td>
+                <td>{{ x.name }}</td>
+                <td><img src="{{ x.picture.url }}" height="50" width="50"></td>
+            </tr>
+            {% endfor %}
+
+
+           </table>
+       </td>
+   </tr>
+
+
+</table>
+</form>
+
+</body>
+</html>
