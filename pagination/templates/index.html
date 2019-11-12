@@ -1,0 +1,82 @@
+<style>
+    .pagination {
+    text-align: center;
+    margin-top: 1em;
+}
+
+.pagination-number {
+    padding: 0.5em 0.8em;
+    border-radius: 2px;
+    color: #fff;
+    background-color: #6D85C7;
+}
+
+.pagination-number:hover, .pagination-current {
+    background-color: #3354AA;
+}
+
+.pagination-action {
+    margin: 0 0.1em;
+    display: inline-block;
+    padding: 0.5em 0.5em;
+    color: #B9B9B9;
+    font-size: 1.3em;
+}
+
+.pagination-action:hover, .pagination-previous, .pagination-next {
+    color: #3354AA;
+}
+</style>
+
+
+<table align="center" border="3">
+    <tr style="background-color: orange;color: white;" >
+        <th>IDNO</th>
+        <th>NAME</th>
+        <th>EMAIL</th>
+        <th colspan="2">SALARY</th>
+    </tr>
+    {% for x in page %}
+    <tr>
+        <td>{{ x.idno }}</td>
+        <td>{{ x.name }}</td>
+        <td>{{ x.email }}</td>
+        <td colspan="2">{{ x.salary }}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+        <td colspan="2" width="150">
+         {% if page.has_previous %}
+             <a href="/index/?page_no=1">&laquo; first</a>&nbsp;&nbsp;
+             <a href="/index/?page_no={{ page.previous_page_number }}">
+                Previous
+            </a>
+          {% endif %}
+        </td>
+
+        <td width="150" height="55">
+
+              {% for x in page.paginator.page_range %}
+
+            {% if page.number == x%}
+            <span class="pagination-number pagination-current">{{ x }}</span>
+            {% elif x > page.number|add:'-3' and x < page.number|add:'3' %}
+            <a class="pagination-number" href="?page_no={{ x }}">{{ x }}</a>
+            {% endif %}
+
+          {% endfor %}
+
+        </td>
+        <td>
+            Page {{ page.number }} of {{ page.paginator.num_pages }}
+        </td>
+        <td width="150">
+          {% if page.has_next %}
+            <a href="/index/?page_no={{ page.next_page_number }}">
+                Next
+            </a>&nbsp;&nbsp;
+             <a href="/index/?page_no={{ page.paginator.num_pages }}">last &raquo;</a>
+           {% endif %}
+        </td>
+    </tr>
+</table>
